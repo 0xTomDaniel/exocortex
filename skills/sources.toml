@@ -1,0 +1,257 @@
+manifest_version = 1
+default_install_root = "/opt/data/skills"
+
+[policy]
+source_of_truth = "Flat project .agents/skills/<skill-name>/ directories plus this manifest are the durable source of truth. Runtime-created or runtime-edited skills must be promoted back to git by adding or updating a pinned manifest entry in a PR before they are treated as approved distribution material."
+collision_behavior = "Fail closed when two selected entries target the same skill name or destination, or when an existing runtime skill lacks Exo source metadata."
+sync_behavior = "Install missing skills, keep matching pinned refs unchanged, and replace an installed skill only when the selected manifest entry keeps the same source id with a different pinned ref."
+production_boundary = "Install approved skills into each instance's /opt/data/skills. Keep the repo source tree flat under .agents/skills for Agent Skills compatibility; do not use writable repo-owned skills.external_dirs as the production source of truth."
+
+[[sources]]
+id = "exo.daily_brief"
+name = "exo-daily-brief"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/exo-daily-brief"
+ref = "fixture-2026-05-28-core-v2"
+profile_targets = ["tom-local-dev"]
+install_destination = "/opt/data/skills/exo-daily-brief"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "hermes.file_brief"
+name = "hermes-file-brief"
+kind = "safe_core"
+category = "general"
+repo = "github.com/hermes-fixtures/core-skills"
+path = "skills/core/file-brief"
+ref = "fixture-2026-05-28-hermes-core-v2"
+profile_targets = ["tom-local-dev"]
+install_destination = "/opt/data/skills/hermes-file-brief"
+source_of_truth = "external-git-with-flat-fallback"
+approved = true
+source_access = "fixture-fallback"
+fallback_fixture = ".agents/skills/hermes-file-brief"
+operator_note = "This flat .agents/skills fixture stands in for a second repo source so AFK checks can prove multi-repo install and update behavior without live external repository credentials."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime changes by contributing them to the external source repo or replacing this fallback fixture with a reviewed pinned source update."
+
+[[sources]]
+id = "private.calendar_audit"
+name = "private-calendar-audit"
+kind = "external_action"
+category = "personal"
+repo = "github.com/private/exo-sensitive-skills"
+path = "skills/calendar-audit"
+ref = "fixture-2026-05-28-private-calendar-v2"
+profile_targets = []
+install_destination = "/opt/data/skills/private-calendar-audit"
+source_of_truth = "private-git-with-flat-fallback"
+approved = false
+source_access = "private-git-fallback"
+fallback_fixture = ".agents/skills/private-calendar-audit"
+operator_note = "Private repository access is not available to ordinary AFK agents. This fallback fixture validates manifest parsing and audit policy only; it is not installed unless a profile explicitly approves the external action."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime-created sensitive skills require owner approval, Phase secret review, audit notes, and a pinned private-repo manifest update before install."
+
+[[sources]]
+id = "exo.planning_capture_os"
+name = "planning-capture-os"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/planning-capture-os"
+ref = "exocortex-continuity-evals-2026-09-07-v1"
+profile_targets = ["tom-personal-agent"]
+install_destination = "/opt/data/skills/planning-capture-os"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "exo.planning_rhythm_os"
+name = "planning-rhythm-os"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/planning-rhythm-os"
+ref = "exocortex-nitride-retrieval-2026-09-07-v1"
+profile_targets = ["tom-personal-agent"]
+install_destination = "/opt/data/skills/planning-rhythm-os"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "exo.planning_task_os"
+name = "planning-task-os"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/planning-task-os"
+ref = "exocortex-continuity-evals-2026-09-07-v1"
+profile_targets = ["tom-personal-agent"]
+install_destination = "/opt/data/skills/planning-task-os"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "exo.tutor"
+name = "tutor"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/tutor"
+ref = "exocortex-import-2026-09-06-v1"
+profile_targets = ["tom-personal-agent"]
+install_destination = "/opt/data/skills/tutor"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "exo.tom_operating_style"
+name = "tom-operating-style"
+kind = "safe_core"
+category = "personal"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/tom-operating-style"
+ref = "exocortex-personal-boundary-2026-09-06-v1"
+profile_targets = ["tom-personal-agent"]
+install_destination = "/opt/data/skills/tom-operating-style"
+source_of_truth = "git"
+approved = true
+source_access = "repo-fixture"
+operator_note = "Tom-specific procedural operating style. It is kept in the shared flat skill source tree for compatibility but targeted only to Tom's profile."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Runtime edits are not authoritative; promote Tom-specific style changes by updating this skill, bumping the pinned ref, and reviewing the git diff."
+
+[[sources]]
+id = "exo.agent_browser"
+name = "agent-browser"
+kind = "external_action"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/agent-browser"
+ref = "exocortex-repair-2026-09-06-v2"
+profile_targets = []
+install_destination = "/opt/data/skills/agent-browser"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Browser automation can interact with external sites and must wait for explicit external-action policy, runtime tooling, and audit approval before profile targeting."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update and explicit external-action approval before installation."
+
+[[sources]]
+id = "exo.obsidian"
+name = "obsidian"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/obsidian"
+ref = "exocortex-nitride-routing-2026-09-07-v1"
+profile_targets = []
+install_destination = "/opt/data/skills/obsidian"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Requires an approved Obsidian/vault runtime surface before installation into a container profile."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update and target only profiles with an approved vault/Obsidian interface."
+
+[[sources]]
+id = "exo.save_video_content"
+name = "save-video-content"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/save-video-content"
+ref = "exocortex-repair-2026-09-06-v3"
+profile_targets = []
+install_destination = "/opt/data/skills/save-video-content"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Requires approved media-download and vault-write runtime surfaces before installation into a container profile."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update and target only profiles with approved media/vault tooling."
+
+[[sources]]
+id = "exo.skill_creator"
+name = "skill-creator"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/skill-creator"
+ref = "exocortex-personal-boundary-2026-09-06-v1"
+profile_targets = []
+install_destination = "/opt/data/skills/skill-creator"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Operator/development skill for authoring skills; not installed into runtime profiles by default."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update before installation."
+
+[[sources]]
+id = "exo.asset_assessment"
+name = "asset-assessment"
+kind = "safe_core"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/asset-assessment"
+ref = "exocortex-import-2026-09-06-v1"
+profile_targets = []
+install_destination = "/opt/data/skills/asset-assessment"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Imported source package only; profile installation awaits the separate review of assessment tooling and runtime prerequisites."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update and explicit profile approval before installation."
+
+[[sources]]
+id = "exo.meow"
+name = "meow"
+kind = "external_action"
+category = "general"
+repo = "github.com/0xTomDaniel/exo-executive-agent"
+path = ".agents/skills/meow"
+ref = "exocortex-personal-boundary-2026-09-06-v1"
+profile_targets = []
+install_destination = "/opt/data/skills/meow"
+source_of_truth = "git"
+approved = false
+source_access = "repo-fixture"
+operator_note = "Owner-neutral Meow adapter source only; no profile installation or banking authorization is granted by this source import. Requires explicit per-instance approval and compatible runtime tooling."
+collision_policy = "fail"
+sync_policy = "replace-if-ref-changed"
+promotion_policy = "Promote runtime edits through a reviewed git update and explicit profile approval before installation."

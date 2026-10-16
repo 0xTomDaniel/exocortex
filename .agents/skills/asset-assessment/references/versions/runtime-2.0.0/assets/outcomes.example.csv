@@ -1,0 +1,2 @@
+assessment_hash,case_spec_hash,case_id,asset,outcome_definition,planned_horizon_end,outcome_as_of,outcome_met,underperformed,adverse_event,decision_taken,regime_window,source,recorder
+ASSESSMENT_SHA256,CASE_SPEC_SHA256,CASE-ID,ASSET,Exact predeclared outcome definition,YYYY-MM-DD,YYYY-MM-DDTHH:MM:SSZ,YES,NO,NO,watch,YYYY-YYYY,SOURCE,RECORDER

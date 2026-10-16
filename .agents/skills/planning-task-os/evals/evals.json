@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "owner": "planning-task-os",
+  "cases": [
+    {
+      "id": "task-displacement",
+      "fixture": "mixed",
+      "turns": [
+        {
+          "prompt": "The research task gets the remaining four hours this week. Website work has to move out; I have not decided when.",
+          "alternate_prompt": "The research task gets the remaining four hours this week. Website work has to move out; I have not decided when.",
+          "fresh_thread": false,
+          "assertions": [
+            "one_research_task",
+            "one_website_task",
+            "website_no_due"
+          ],
+          "rubric": [
+            "Use existing tasks, record explicit displacement, do not invent a website due date, and reconcile plan prose and stale confirmation."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "task-ambiguity",
+      "fixture": "mixed",
+      "turns": [
+        {
+          "prompt": "Website work matters more now, but I am unsure what to take off my plate.",
+          "alternate_prompt": "Website work matters more now, but I am unsure what to take off my plate.",
+          "fresh_thread": false,
+          "assertions": [
+            "one_website_task",
+            "website_no_due",
+            "week_open"
+          ],
+          "rubric": [
+            "Keep capacity decision unresolved; do not silently overfill the week or invent a displacement decision."
+          ]
+        }
+      ]
+    }
+  ]
+}

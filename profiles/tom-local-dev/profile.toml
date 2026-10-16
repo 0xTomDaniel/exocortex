@@ -1,0 +1,135 @@
+[profile]
+id = "tom-local-dev"
+owner_name = "Tom Daniel"
+mode = "local-dev"
+timezone = "Etc/UTC"
+role = "Local/dev validation profile for Tom Daniel using fake Telegram and fake model fixtures."
+intended_profile = "template-and-local-smoke"
+
+[hermes]
+runtime = "hermes-agent"
+home = "${EXO_RUNTIME_ROOT}/tom-local-dev/hermes-home"
+workspace = "${EXO_RUNTIME_ROOT}/tom-local-dev/workspace"
+skills_dir = "/opt/data/skills"
+
+[telegram]
+mode = "fake"
+owner_id_secret = "TELEGRAM_OWNER_ID"
+bot_token_secret = "TELEGRAM_BOT_TOKEN"
+token_path = "${EXO_RUNTIME_ROOT}/tom-local-dev/secret-bridge/telegram-bot-token"
+owner_only = true
+text_only = true
+
+[model]
+mode = "fake"
+provider = "fake-local"
+api_key_secret = "OPENAI_API_KEY"
+
+[phase]
+app = "exo-executive-agent"
+environment = "dev"
+path = "/tom/local"
+
+[storage.runtime]
+kind = "hermes-home"
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/hermes-home"
+container_path = "/opt/data/hermes-home"
+access = "read-write"
+git_owned = false
+permissions = "0700 owner-only runtime state; not mounted into other owner containers"
+backup = "included in per-profile backup boundary with sessions, context, and Hermes state"
+recovery = "restore from the same profile backup boundary before starting this container"
+allowed_write_paths = ["/opt/data/hermes-home"]
+
+[storage.vault]
+kind = "markdown-vault"
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/vault"
+container_path = "/opt/data/vault"
+access = "read-write"
+git_owned = false
+permissions = "0700 owner-only agent writable Markdown memory and vault files"
+backup = "included in per-profile backup boundary as durable Markdown memory"
+recovery = "restore vault alongside Hermes home; git remains distribution source, not memory source"
+allowed_write_paths = ["/opt/data/vault"]
+
+[storage.personal_files]
+kind = "personal-files"
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/personal-files"
+container_path = "/mnt/personal-files"
+access = "read-only"
+git_owned = false
+permissions = "read-only by default; owner controls host permissions"
+backup = "operator-owned source files are not backed up by the agent backup boundary"
+recovery = "remount or resync from the operator-owned personal files provider"
+allowed_write_paths = []
+
+[[storage.placeholder_mounts]]
+name = "calendar-export"
+kind = "provider-export"
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/placeholders/calendar-export"
+mount_path = "/mnt/calendar-export"
+access = "read-only"
+git_owned = false
+permissions = "read-only fixture mount for exported calendar data"
+backup = "not backed up by the agent; regenerate from provider export"
+recovery = "replace fixture/export from the provider selected outside this slice"
+allowed_write_paths = []
+
+[container]
+name = "exo-hermes-tom-local-dev"
+image = "ghcr.io/0xtomdaniel/hermes-agent:local-dev"
+restart_policy = "unless-stopped"
+
+[logs]
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/log-boundary"
+git_owned = false
+
+[backups]
+path = "${EXO_RUNTIME_ROOT}/tom-local-dev/backup-boundary"
+git_owned = false
+scope = "tom-local-dev-hermes-home-vault-and-config"
+
+[[tools.safe_core]]
+name = "memory.read"
+reason = "Read owner-approved Hermes memory/context."
+
+[[tools.safe_core]]
+name = "memory.write_markdown"
+reason = "Write only to the agent-owned Markdown vault."
+
+[[tools.safe_core]]
+name = "files.read_workspace"
+reason = "Read distribution workspace and local fixtures."
+
+[[tools.safe_core]]
+name = "telegram.reply_text"
+reason = "Reply to owner-only text messages in the Telegram gateway."
+
+[tools.external_actions]
+enabled = false
+allow = []
+policy = "External-action tools require per-instance opt-in, Phase-managed secrets, and approval/audit documentation."
+
+[proactive]
+enabled = true
+target_profile_id = "tom-local-dev"
+delivery_surface = "telegram-owner-text"
+
+[proactive.check_ins]
+enabled = true
+morning_enabled = true
+morning_local_time = "09:00"
+evening_enabled = true
+evening_local_time = "18:00"
+
+[proactive.health_pings]
+enabled = true
+provider = "fake-local"
+fixture = "profiles/tom-local-dev/fixtures/fake_health_status_problems.json"
+
+[smoke]
+telegram_fixture = "profiles/tom-local-dev/fixtures/fake_telegram_owner_text.json"
+phase_fixture = "profiles/tom-local-dev/fixtures/fake_phase_minimal.json"
+storage_fixture_root = "profiles/tom-local-dev/fixtures/storage"
+storage_sync_fixture = "profiles/tom-local-dev/fixtures/storage/sync-health.json"
+expected_reply = "Tom local/dev Exo is loaded with fake Telegram and safe-core tools only."

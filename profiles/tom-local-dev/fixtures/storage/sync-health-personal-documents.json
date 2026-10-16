@@ -1,0 +1,25 @@
+{
+  "provider": "fake-local",
+  "states": [
+    {
+      "zone": "runtime",
+      "status": "healthy",
+      "summary": "Hermes runtime state fixture is present and recently checked."
+    },
+    {
+      "zone": "vault",
+      "status": "stale",
+      "summary": "Markdown vault fixture is readable but its last sync marker is older than policy."
+    },
+    {
+      "zone": "personal_files",
+      "status": "errored",
+      "summary": "Read-only personal files fixture reports a synthetic provider export error."
+    },
+    {
+      "zone": "placeholder:personal-documents",
+      "status": "unavailable",
+      "summary": "Personal documents placeholder is intentionally unavailable until a provider is selected."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+# Dedicated Voice sidecar policy captured from the working deployment.
+# Docker constrains mounts/capabilities; prompts are not a security boundary.
+# Phone/thread overrides can differ: verify the actual turn context.
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
+
+[projects."/home/codex/Documents/Codex"]
+trust_level = "trusted"

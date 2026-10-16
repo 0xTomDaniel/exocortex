@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "owner": "planning-capture-os",
+  "cases": [
+    {
+      "id": "capture-commitment",
+      "fixture": "mixed",
+      "turns": [
+        {
+          "prompt": "Before that, I have been thinking about my friendship with Morgan. I will call Morgan tomorrow afternoon. I feel we have drifted.",
+          "alternate_prompt": "Before that, I have been thinking about my friendship with Morgan. I will call Morgan tomorrow afternoon. I feel we have drifted.",
+          "fresh_thread": false,
+          "assertions": [
+            "week_open",
+            "call_captured"
+          ],
+          "rubric": [
+            "Persist the explicit commitment once in the existing canonical task and dated attention mechanism; continue natural reflection."
+          ]
+        },
+        {
+          "prompt": "To be clear, that is the same call to Morgan tomorrow afternoon.",
+          "alternate_prompt": "To be clear, that is the same call to Morgan tomorrow afternoon.",
+          "fresh_thread": false,
+          "assertions": [
+            "call_captured",
+            "one_call_task"
+          ],
+          "rubric": [
+            "Update or confirm existing commitment rather than create another."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "capture-hypothetical",
+      "fixture": "open",
+      "turns": [
+        {
+          "prompt": "I feel uneasy about presenting. Maybe joining a speaking group someday could help, but I am just thinking aloud.",
+          "alternate_prompt": "I am nervous about speaking. A speaking club might be interesting one day; I have not decided to join.",
+          "fresh_thread": false,
+          "assertions": [
+            "no_workflow",
+            "no_new_tasks"
+          ],
+          "rubric": [
+            "Explore feelings naturally; no task or commitment invented from the hypothetical."
+          ]
+        }
+      ]
+    }
+  ]
+}

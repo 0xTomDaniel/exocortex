@@ -1,0 +1,121 @@
+id: exo-executive-agent
+name: Exo Executive Agent
+runtime: hermes
+version: 0.1.0
+description: Hermes profile-distribution/setup repository for private personal executive assistant instances.
+soul: SOUL.md
+skills_source_manifest: skills/sources.toml
+storage_contract:
+  provider_topology_owner: EMB-317
+  live_mount_proof_owner: EMB-317
+  fake_sync_health_fixture: profiles/tom-local-dev/fixtures/storage/sync-health.json
+  zones:
+    - id: runtime
+      kind: hermes-home
+      container_path: /opt/data/hermes-home
+      access: read-write
+      allowed_write_paths:
+        - /opt/data/hermes-home
+      durable_memory_role: Hermes built-in memory/session/context state
+    - id: vault
+      kind: markdown-vault
+      container_path: /opt/data/vault
+      access: read-write
+      allowed_write_paths:
+        - /opt/data/vault
+      durable_memory_role: agent-owned Markdown memory and vault files
+    - id: personal_files
+      kind: personal-files
+      container_path: /mnt/personal-files
+      access: read-only
+      allowed_write_paths: []
+      durable_memory_role: broader owner files, read-only by default
+profiles:
+  - id: tom-local-dev
+    role: Tom-oriented local/dev profile with fake Telegram smoke support.
+    config: profiles/tom-local-dev/profile.toml
+    hermes_config_template: profiles/tom-local-dev/hermes/config.yaml.template
+    generated_example: profiles/tom-local-dev/generated/config.yaml
+    required_phase_path: /tom/local
+    safe_core_tools:
+      - memory.read
+      - memory.write_markdown
+      - files.read_workspace
+      - telegram.reply_text
+    external_action_tools: []
+    owner_identity: Tom Daniel
+    telegram_token_path: ${EXO_RUNTIME_ROOT}/tom-local-dev/secret-bridge/telegram-bot-token
+    hermes_home: ${EXO_RUNTIME_ROOT}/tom-local-dev/hermes-home
+    logs: ${EXO_RUNTIME_ROOT}/tom-local-dev/log-boundary
+    backups: ${EXO_RUNTIME_ROOT}/tom-local-dev/backup-boundary
+    restart_boundary: exo-hermes-tom-local-dev
+  - id: tom-personal-agent
+    role: Private Telegram-first Exo executive assistant for Tom Daniel, powered by Hermes.
+    config: profiles/tom-personal-agent/profile.toml
+    required_phase_path: /tom/personal-agent
+    owner_identity: Tom Daniel
+    telegram_token_path: ${EXO_RUNTIME_ROOT}/tom-personal-agent/secret-bridge/telegram-bot-token
+    hermes_home: ${EXO_RUNTIME_ROOT}/tom-personal-agent/hermes-home
+    logs: ${EXO_RUNTIME_ROOT}/tom-personal-agent/log-boundary
+    backups: ${EXO_RUNTIME_ROOT}/tom-personal-agent/backup-boundary
+    restart_boundary: exo-hermes-tom-personal-agent
+    safe_core_tools:
+      - memory.read
+      - memory.write_markdown
+      - files.read_workspace
+      - telegram.reply_text
+    external_action_tools: []
+  - id: alex-personal-agent
+    role: Private Telegram-first Exo executive assistant for Alex Example, powered by Hermes.
+    config: profiles/alex-personal-agent/profile.toml
+    required_phase_path: /alex/personal-agent
+    owner_identity: Alex Example
+    telegram_token_path: ${EXO_RUNTIME_ROOT}/alex-personal-agent/secret-bridge/telegram-bot-token
+    hermes_home: ${EXO_RUNTIME_ROOT}/alex-personal-agent/hermes-home
+    logs: ${EXO_RUNTIME_ROOT}/alex-personal-agent/log-boundary
+    backups: ${EXO_RUNTIME_ROOT}/alex-personal-agent/backup-boundary
+    restart_boundary: exo-hermes-alex-personal-agent
+    safe_core_tools:
+      - memory.read
+      - memory.write_markdown
+      - files.read_workspace
+      - telegram.reply_text
+    external_action_tools: []
+  - id: sam-personal-agent
+    role: Private Telegram-first Exo executive assistant for Sam Example, powered by Hermes.
+    config: profiles/sam-personal-agent/profile.toml
+    required_phase_path: /sam/personal-agent
+    owner_identity: Sam Example
+    telegram_token_path: ${EXO_RUNTIME_ROOT}/sam-personal-agent/secret-bridge/telegram-bot-token
+    hermes_home: ${EXO_RUNTIME_ROOT}/sam-personal-agent/hermes-home
+    logs: ${EXO_RUNTIME_ROOT}/sam-personal-agent/log-boundary
+    backups: ${EXO_RUNTIME_ROOT}/sam-personal-agent/backup-boundary
+    restart_boundary: exo-hermes-sam-personal-agent
+    safe_core_tools:
+      - memory.read
+      - memory.write_markdown
+      - files.read_workspace
+      - telegram.reply_text
+    external_action_tools: []
+compose:
+  template: deploy/compose/hermes-multi-owner.compose.yaml.template
+  generated_example: deploy/compose/generated/hermes-multi-owner.compose.yaml
+  invariant: one Hermes gateway container and one Hermes home per profile id
+owned_paths:
+  distribution:
+    - distribution.yaml
+    - SOUL.md
+    - profiles/
+    - schemas/
+    - scripts/
+    - tests/
+    - spec/
+  user_runtime_excluded:
+    - runtime/
+    - data/
+    - hermes-home/
+    - memories/
+    - sessions/
+    - logs/
+    - backups/
+    - personal-files/

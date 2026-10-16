@@ -1,0 +1,5 @@
+# Rendered from profiles/*/profile.toml.
+# This template declares one active Hermes gateway container per owner instance.
+# Runtime homes, token files, logs, backups, and mounts are outside git under EXO_RUNTIME_ROOT.
+services:
+{{ hermes_services_yaml }}

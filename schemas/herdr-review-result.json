@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review_status", "findings", "limitations"],
+  "properties": {
+    "review_status": {"type": "string", "enum": ["completed", "blocked"]},
+    "findings": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

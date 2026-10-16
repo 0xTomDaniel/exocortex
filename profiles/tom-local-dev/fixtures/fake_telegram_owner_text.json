@@ -1,0 +1,13 @@
+{
+  "owner_id": "fake-tom-owner",
+  "updates": [
+    {
+      "chat_id": "fake-tom-owner",
+      "text": "status"
+    },
+    {
+      "chat_id": "not-the-owner",
+      "text": "status"
+    }
+  ]
+}

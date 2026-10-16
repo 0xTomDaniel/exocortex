@@ -1,0 +1,135 @@
+[profile]
+id = "tom-personal-agent"
+owner_name = "Tom Daniel"
+mode = "template"
+timezone = "America/Los_Angeles"
+role = "Private Telegram-first Exo executive assistant for Tom Daniel, powered by Hermes."
+intended_profile = "installable-template"
+
+[hermes]
+runtime = "hermes-agent"
+home = "${EXO_RUNTIME_ROOT}/tom-personal-agent/hermes-home"
+workspace = "${EXO_RUNTIME_ROOT}/tom-personal-agent/workspace"
+skills_dir = "/opt/data/skills"
+
+[telegram]
+mode = "phase"
+owner_id_secret = "TELEGRAM_OWNER_ID"
+bot_token_secret = "TELEGRAM_BOT_TOKEN"
+token_path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/secret-bridge/telegram-bot-token"
+owner_only = true
+text_only = true
+
+[model]
+mode = "hermes-auth"
+provider = "openai-codex"
+api_key_secret = ""
+
+[phase]
+app = "Tom's personal agent"
+environment = "prod"
+path = "/tom/personal-agent"
+
+[storage.runtime]
+kind = "hermes-home"
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/hermes-home"
+container_path = "/opt/data/hermes-home"
+access = "read-write"
+git_owned = false
+permissions = "0700 owner-only runtime state; not mounted into other owner containers"
+backup = "included in per-profile backup boundary with sessions, context, and Hermes state"
+recovery = "restore from the same profile backup boundary before starting this container"
+allowed_write_paths = ["/opt/data/hermes-home"]
+
+[storage.vault]
+kind = "markdown-vault"
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/vault"
+container_path = "/opt/data/vault"
+access = "read-write"
+git_owned = false
+permissions = "0700 owner-only agent writable Markdown memory and vault files"
+backup = "included in per-profile backup boundary as durable Markdown memory"
+recovery = "restore vault alongside Hermes home; git remains distribution source, not memory source"
+allowed_write_paths = ["/opt/data/vault"]
+
+[storage.personal_files]
+kind = "personal-files"
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/personal-files"
+container_path = "/mnt/personal-files"
+access = "read-only"
+git_owned = false
+permissions = "read-only by default; owner controls host permissions"
+backup = "operator-owned source files are not backed up by the agent backup boundary"
+recovery = "remount or resync from the operator-owned personal files provider"
+allowed_write_paths = []
+
+[[storage.placeholder_mounts]]
+name = "personal-documents"
+kind = "personal-files-placeholder"
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/placeholders/personal-documents"
+mount_path = "/mnt/personal-documents"
+access = "read-only"
+git_owned = false
+permissions = "read-only placeholder for broader personal files"
+backup = "not backed up by the agent; provider/topology remains EMB-317 scope"
+recovery = "remount from the provider selected and proven outside this repo slice"
+allowed_write_paths = []
+
+[container]
+name = "exo-hermes-tom-personal-agent"
+image = "nousresearch/hermes-agent:latest"
+restart_policy = "unless-stopped"
+
+[logs]
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/log-boundary"
+git_owned = false
+
+[backups]
+path = "${EXO_RUNTIME_ROOT}/tom-personal-agent/backup-boundary"
+git_owned = false
+scope = "tom-personal-agent-hermes-home-vault-and-config"
+
+[[tools.safe_core]]
+name = "memory.read"
+reason = "Read owner-approved Hermes memory/context."
+
+[[tools.safe_core]]
+name = "memory.write_markdown"
+reason = "Write only to the agent-owned Markdown vault."
+
+[[tools.safe_core]]
+name = "files.read_workspace"
+reason = "Read distribution workspace and approved read-only mounts."
+
+[[tools.safe_core]]
+name = "telegram.reply_text"
+reason = "Reply to owner-only text messages in the Telegram gateway."
+
+[tools.external_actions]
+enabled = false
+allow = []
+policy = "External-action tools require per-instance opt-in, Phase-managed secrets, and approval/audit documentation."
+
+[proactive]
+enabled = true
+target_profile_id = "tom-personal-agent"
+delivery_surface = "telegram-owner-text"
+
+[proactive.check_ins]
+enabled = true
+morning_enabled = true
+morning_local_time = "09:00"
+evening_enabled = true
+evening_local_time = "18:00"
+
+[proactive.health_pings]
+enabled = true
+provider = "fake-local"
+fixture = "profiles/tom-local-dev/fixtures/fake_health_status_problems.json"
+
+[smoke]
+telegram_fixture = "profiles/tom-local-dev/fixtures/fake_telegram_owner_text.json"
+phase_fixture = "profiles/tom-local-dev/fixtures/fake_phase_minimal.json"
+storage_fixture_root = "profiles/tom-local-dev/fixtures/storage"
+storage_sync_fixture = "profiles/tom-local-dev/fixtures/storage/sync-health-personal-documents.json"
+expected_reply = "Tom personal-agent template is renderable without live runtime state."

@@ -1,0 +1,383 @@
+{
+  "schema_version": "2.0.0",
+  "bank_version": "2.0.0",
+  "status": "empirical-baseline",
+  "comparable_with": [
+    {
+      "bank_version": "2.0.0",
+      "bank_hash": "b59b3b97676c2deb9e4fba398c8558b2de32c4cfdc685e0110c8397fe3449fb6"
+    }
+  ],
+  "bank_commit": "no-vcs",
+  "factors": [
+    "use_case",
+    "adoption_pmf",
+    "economics_quality",
+    "instrument_value_capture",
+    "supply_dilution",
+    "valuation",
+    "memetic_strength",
+    "competitive_moat",
+    "security_custody",
+    "governance_control",
+    "team_execution",
+    "regulatory_legal",
+    "liquidity_market_structure",
+    "catalysts",
+    "positioning_reflexivity",
+    "failure_modes",
+    "portfolio_fit",
+    "evidence_quality"
+  ],
+  "dimension_layer_map": {
+    "durability": "merit",
+    "value_capture": "merit",
+    "meme_cultural_capital": "merit",
+    "valuation": "entry",
+    "market_structure": "entry",
+    "security": "integrity",
+    "control": "integrity",
+    "legal_claim": "integrity",
+    "implementation": "implementation",
+    "portfolio_fit": "fit"
+  },
+  "gate_stages": [
+    "identity",
+    "integrity",
+    "eligibility",
+    "diligence",
+    "implementation",
+    "policy",
+    "evidence"
+  ],
+  "purposes": {
+    "screen": {
+      "enforced_stages": [
+        "identity"
+      ],
+      "min_coverage": null,
+      "per_dimension_floor": null,
+      "max_conflicts": null
+    },
+    "diligence": {
+      "enforced_stages": [
+        "identity",
+        "integrity",
+        "eligibility",
+        "diligence",
+        "evidence"
+      ],
+      "min_coverage": 0.75,
+      "per_dimension_floor": 0.5,
+      "max_conflicts": 0
+    },
+    "action": {
+      "enforced_stages": [
+        "identity",
+        "integrity",
+        "eligibility",
+        "diligence",
+        "implementation",
+        "policy",
+        "evidence"
+      ],
+      "min_coverage": 0.85,
+      "per_dimension_floor": 0.6,
+      "max_conflicts": 0
+    }
+  },
+  "files": {
+    "question-bank-common.csv": {
+      "sha256": "1b35bf34559c47c30f6f088ee1c37d5eaf60d0188bab726507d9e797424d5cb8",
+      "rows": 39
+    },
+    "question-bank-crypto.csv": {
+      "sha256": "391def8ca89128006098ffc97b48b4d137f946c5099e0c22574369bc2ceb3795",
+      "rows": 40
+    },
+    "question-bank-stocks.csv": {
+      "sha256": "ceaddd3b05b5257b02aeb88c288ccf7b1427b4b891471388ee483151654ca2e8",
+      "rows": 41
+    },
+    "question-bank-crypto-monetary.csv": {
+      "sha256": "63534bf721521d08df036faaada292dbcb74413ccd875a7cf5746a70d5356fe8",
+      "rows": 4
+    },
+    "question-bank-crypto-base-layer.csv": {
+      "sha256": "39ea1acd704514e70abe91ad719752920858eabea50e2763a9f59d25aa0725be",
+      "rows": 4
+    },
+    "question-bank-crypto-protocol-token.csv": {
+      "sha256": "0087942872c98330e67742141f269c962cbc0a6a44c8ed9b60f276430ee4f1ad",
+      "rows": 3
+    },
+    "question-bank-stock-operating-company.csv": {
+      "sha256": "ee2662b91d6b09b94dc9cbfd5a07538de211a0d1a77a1ee86a93ea05b594cb63",
+      "rows": 3
+    },
+    "question-bank-stock-financial.csv": {
+      "sha256": "c3e65c1ebb72e35aa1e15de148fe295f73d015f10e0ef4043b481ce5fe61371e",
+      "rows": 5
+    },
+    "question-bank-exposure-wrapped.csv": {
+      "sha256": "99fef7248ca26abd9a2277cc3722b14c45f490e3be4e13f39a7bad482f0758d7",
+      "rows": 5
+    },
+    "question-bank-exposure-yield-position.csv": {
+      "sha256": "2a0081e62ac7460437b4c2b237c1fc121fa563ff792437dbd6b58d78184e9338",
+      "rows": 5
+    }
+  },
+  "subtypes": {
+    "crypto": {
+      "monetary": {
+        "overlay_file": "question-bank-crypto-monetary.csv",
+        "suppress": [
+          "COM-ECO03",
+          "CRY-ECO01",
+          "CRY-ECO02",
+          "CRY-VC01",
+          "CRY-VC03",
+          "CRY-VC04",
+          "CRY-TEAM01",
+          "COM-GOV01",
+          "COM-ECO01",
+          "COM-VC02",
+          "COM-VC03",
+          "CRY-GOV01"
+        ],
+        "reason": "Cash-flow/protocol-steward constructs do not define a direct monetary asset."
+      },
+      "base_layer": {
+        "overlay_file": "question-bank-crypto-base-layer.csv",
+        "suppress": [
+          "COM-GOV01"
+        ],
+        "reason": ""
+      },
+      "protocol_token": {
+        "overlay_file": "question-bank-crypto-protocol-token.csv",
+        "suppress": [
+          "CRY-GOV01",
+          "CRY-GOV03",
+          "CRY-SEC08",
+          "COM-GOV01"
+        ],
+        "reason": "Settlement-layer finality, ordering, and native security budget are evaluated through dependencies rather than as token-native constructs."
+      },
+      "other": {
+        "overlay_file": null,
+        "suppress": [
+          "COM-GOV01"
+        ],
+        "reason": ""
+      }
+    },
+    "stock": {
+      "operating_company": {
+        "overlay_file": "question-bank-stock-operating-company.csv",
+        "suppress": [],
+        "reason": ""
+      },
+      "financial": {
+        "overlay_file": "question-bank-stock-financial.csv",
+        "suppress": [
+          "STK-ECO01",
+          "STK-ECO04"
+        ],
+        "reason": "Industrial unit/gross-margin constructs are not category-appropriate for financial institutions."
+      },
+      "other": {
+        "overlay_file": null,
+        "suppress": [],
+        "reason": ""
+      }
+    }
+  },
+  "exposures": {
+    "direct": {
+      "overlay_file": null,
+      "suppress": [],
+      "reason": ""
+    },
+    "wrapped": {
+      "overlay_file": "question-bank-exposure-wrapped.csv",
+      "suppress": [
+        "CRY-VC03",
+        "CRY-LIQ01"
+      ],
+      "reason": "Wrapper-specific holder and redemption constructs replace the direct spot-holder route."
+    },
+    "yield_position": {
+      "overlay_file": "question-bank-exposure-yield-position.csv",
+      "suppress": [
+        "CRY-VC03",
+        "CRY-LIQ01"
+      ],
+      "reason": "Position-level capture and redemption constructs replace the direct spot-holder route."
+    }
+  },
+  "assemblies": [
+    {
+      "class": "crypto",
+      "subtype": "monetary",
+      "exposure": "direct"
+    },
+    {
+      "class": "crypto",
+      "subtype": "monetary",
+      "exposure": "wrapped"
+    },
+    {
+      "class": "crypto",
+      "subtype": "base_layer",
+      "exposure": "direct"
+    },
+    {
+      "class": "crypto",
+      "subtype": "base_layer",
+      "exposure": "wrapped"
+    },
+    {
+      "class": "crypto",
+      "subtype": "base_layer",
+      "exposure": "yield_position"
+    },
+    {
+      "class": "crypto",
+      "subtype": "protocol_token",
+      "exposure": "direct"
+    },
+    {
+      "class": "crypto",
+      "subtype": "protocol_token",
+      "exposure": "wrapped"
+    },
+    {
+      "class": "crypto",
+      "subtype": "protocol_token",
+      "exposure": "yield_position"
+    },
+    {
+      "class": "crypto",
+      "subtype": "other",
+      "exposure": "direct"
+    },
+    {
+      "class": "crypto",
+      "subtype": "other",
+      "exposure": "wrapped"
+    },
+    {
+      "class": "crypto",
+      "subtype": "other",
+      "exposure": "yield_position"
+    },
+    {
+      "class": "stock",
+      "subtype": "operating_company",
+      "exposure": "direct"
+    },
+    {
+      "class": "stock",
+      "subtype": "financial",
+      "exposure": "direct"
+    },
+    {
+      "class": "stock",
+      "subtype": "other",
+      "exposure": "direct"
+    }
+  ],
+  "unsupported_routes": {
+    "stablecoin": "Use a separate par-preservation/outcome family.",
+    "derivative": "No canonical v2.0.0 bank; use a decision-specific extension or future overlay.",
+    "other_asset_classes": "Use the dynamic rubric/checklist procedure."
+  },
+  "version_policy": {
+    "patch": "Editorial changes preserving constructs and IDs.",
+    "minor": "Question additions/retirements with lineage and explicit comparability.",
+    "major": "Runtime schema or scoring-semantics changes."
+  },
+  "control_strength": "Hashes are tamper-evident only when anchored in an external append-only or version-controlled record outside the evaluator\u2019s unilateral authority; they are not a security boundary.",
+  "audit_files": {
+    "migration-1.0.0-to-2.0.0.csv": {
+      "sha256": "1ec625eb67d96532e3907a4d7d7f461af851ac61f4dc4934e7aa2ca08e595d91"
+    },
+    "versions/1.0.0/bank-manifest.json": {
+      "sha256": "bb32d18733df86c939887e86c203ad8d4f7834be8f08125b95da5049fe29c636"
+    }
+  },
+  "runtime_version": "2.0.1",
+  "runtime_files": {
+    "assets/independent-review.toml": {
+      "sha256": "e24991539be8b4b57fab62d5d760af9eeb53599518c9940133cd3181f6386e60"
+    },
+    "scripts/analyze_question_history.py": {
+      "sha256": "a74c0af47291a06b2aa4a950d624c0659bb621494738122e4b02062c50c4eafd"
+    },
+    "scripts/banklib.py": {
+      "sha256": "1bf4c0d69d6c95fa99a0717924041f2fee725516c548567d209e707865d36aff"
+    },
+    "scripts/build_assessment_checklist.py": {
+      "sha256": "0cd339babf225daaab15f2cc607f4328acc3cfa9dd256089ddf8f46fb621d901"
+    },
+    "scripts/create_case_spec.py": {
+      "sha256": "d350c296858a63ab642eceb3fc3a74153adc77060905e9952c857dd43b5792c7"
+    },
+    "scripts/finalize_assessment.py": {
+      "sha256": "3222dae92137e090348fcf132c24850d542f49edff4af51689fb5afa4c5aa004"
+    },
+    "scripts/score_checklist.py": {
+      "sha256": "be5811fa5d7c88e5918e1d0b326f8949a24ec407ac3d6aa092a71e77a10d99de"
+    },
+    "scripts/validate_question_bank.py": {
+      "sha256": "1194b0c82f295ea6fca8079cbc01504834d814d7c2cbbca148cf867e760d235d"
+    },
+    "scripts/verify_case.py": {
+      "sha256": "025a84f2f64f0e4640ccd18fb25a60aefedf2a81d5fb3309e1dfe17ec4f33007"
+    },
+    "scripts/verify_independent_review.py": {
+      "sha256": "e230adc0a7238c39c81744aeaf1b45077d7ad81422feb4d4228393d6f8667242"
+    }
+  },
+  "runtime_hash": "bd72112d3cc7ce5de0d4e6cb1134719be7d9d3a303fb359b0eb50ced13ed88e1",
+  "bank_hash": "b59b3b97676c2deb9e4fba398c8558b2de32c4cfdc685e0110c8397fe3449fb6",
+  "gate_only_dimensions_by_tier": {
+    "core": [
+      "implementation",
+      "legal_claim"
+    ],
+    "full": []
+  },
+  "compatible_runtimes": [
+    {
+      "runtime_version": "2.0.0",
+      "runtime_hash": "92a21c418b55602aa9778e2e56f0dafb4f496e2127171d5b78ac5b341d9381e5"
+    },
+    {
+      "runtime_version": "2.0.1",
+      "runtime_hash": "bd72112d3cc7ce5de0d4e6cb1134719be7d9d3a303fb359b0eb50ced13ed88e1"
+    }
+  ],
+  "superseded_runtimes": [
+    {
+      "runtime_version": "2.0.0-rc.1",
+      "runtime_hash": "c75c069e712ee107655f7b043470aba1ed1648b2a95029576d67c3ad3021e0d6",
+      "empirical": false,
+      "note": "Pre-finalization release candidate; superseded before any empirical assessment."
+    },
+    {
+      "runtime_version": "2.0.0-rc.2",
+      "runtime_hash": "c0005d57001999d1c198bf61d374210441083517d60dba00ebe23f95e8b4c961",
+      "empirical": false,
+      "note": "Post-consensus release candidate; superseded by final pre-empirical integrity repairs."
+    },
+    {
+      "runtime_version": "2.0.0-rc.3",
+      "runtime_hash": "9cf7b1df6b9d4acc05516bbbd7a667e1ceee751d3fdc30492a87a1709f723784",
+      "empirical": false,
+      "note": "Pre-empirical candidate superseded by adjudication and review-purpose integrity repairs."
+    }
+  ]
+}

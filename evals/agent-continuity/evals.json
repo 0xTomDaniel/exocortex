@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "owner": "AGENTS.md",
+  "cases": [
+    {
+      "id": "mixed",
+      "fixture": "mixed",
+      "turns": [
+        {
+          "prompt": "Hi.",
+          "alternate_prompt": "Morning, how are things?",
+          "fresh_thread": false,
+          "assertions": [
+            "week_open",
+            "sprint_open"
+          ],
+          "rubric": [
+            "Surface the saved four-hour choice briefly and allow redirection; do not launch a full steering scan."
+          ]
+        },
+        {
+          "prompt": "Before that, I have been thinking about my friendship with Morgan. I will call Morgan tomorrow afternoon. I feel we have drifted.",
+          "alternate_prompt": "Before that, I have been thinking about my friendship with Morgan. I will call Morgan tomorrow afternoon. I feel we have drifted.",
+          "fresh_thread": false,
+          "assertions": [
+            "week_open",
+            "call_captured"
+          ],
+          "rubric": [
+            "Persist the explicit commitment once in the existing canonical task and dated attention mechanism; continue natural reflection."
+          ]
+        },
+        {
+          "prompt": "Where were we?",
+          "alternate_prompt": "I am back. What did we leave open?",
+          "fresh_thread": true,
+          "assertions": [
+            "week_open",
+            "call_captured"
+          ],
+          "rubric": [
+            "Recover the call and exact paused weekly choice from files without the previous transcript."
+          ]
+        },
+        {
+          "prompt": "Give research the four hours and move website work out of this week. Lock in that choice for this week. Is the whole sprint now planned?",
+          "alternate_prompt": "Give research the four hours and move website work out of this week. Lock in that choice for this week. Is the whole sprint now planned?",
+          "fresh_thread": false,
+          "assertions": [
+            "sprint_open"
+          ],
+          "rubric": [
+            "Persist the allocation and displacement, reconcile affected notes, clear stale confirmation when needed; do not promote week agreement into sprint completion."
+          ]
+        },
+        {
+          "prompt": "Leave the rest of sprint planning until tomorrow morning. Let us return to the friendship question.",
+          "alternate_prompt": "Leave the rest of sprint planning until tomorrow morning. Let us return to the friendship question.",
+          "fresh_thread": false,
+          "assertions": [
+            "sprint_deferred",
+            "call_captured"
+          ],
+          "rubric": [
+            "Save a dated re-entry point and preserve progress without repeatedly pulling the owner back."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "open",
+      "fixture": "open",
+      "turns": [
+        {
+          "prompt": "Hi.",
+          "alternate_prompt": "Hello, I have a moment.",
+          "fresh_thread": false,
+          "assertions": [
+            "no_workflow",
+            "no_new_tasks"
+          ],
+          "rubric": [
+            "Use verified presentation context for useful initiative, or leave room to talk; no mandatory planning."
+          ]
+        },
+        {
+          "prompt": "I feel uneasy about presenting. Maybe joining a speaking group someday could help, but I am just thinking aloud.",
+          "alternate_prompt": "I am nervous about speaking. A speaking club might be interesting one day; I have not decided to join.",
+          "fresh_thread": false,
+          "assertions": [
+            "no_workflow",
+            "no_new_tasks"
+          ],
+          "rubric": [
+            "Explore feelings naturally; no task or commitment invented from the hypothetical."
+          ]
+        },
+        {
+          "prompt": "Let us plan today.",
+          "alternate_prompt": "Let us plan today.",
+          "fresh_thread": false,
+          "assertions": [
+            "day_progress"
+          ],
+          "rubric": [
+            "Load the progress contract and persist scope before the first substantive planning question; report missing current coverage."
+          ]
+        },
+        {
+          "prompt": "Cancel this planning session. The presentation still stands.",
+          "alternate_prompt": "Cancel this planning session. The presentation still stands.",
+          "fresh_thread": false,
+          "assertions": [
+            "day_cancelled",
+            "presentation_preserved"
+          ],
+          "rubric": [
+            "Save explicit cancellation, not completion, and preserve the separate appointment."
+          ]
+        },
+        {
+          "prompt": "I would like to keep talking about the uneasy feeling.",
+          "alternate_prompt": "I would like to keep talking about the uneasy feeling.",
+          "fresh_thread": false,
+          "assertions": [
+            "day_cancelled",
+            "presentation_preserved"
+          ],
+          "rubric": [
+            "Continue reflection without reopening cancelled planning."
+          ]
+        }
+      ]
+    }
+  ]
+}

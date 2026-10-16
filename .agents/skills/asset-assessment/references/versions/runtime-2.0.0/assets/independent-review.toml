@@ -1,0 +1,27 @@
+schema_version = "1.0.0"
+minimum_distinct_models = 2
+required_for_purposes = ["action"]
+# Process requirement: the runtime records policy but cannot verify what a model saw.
+blind_review_is_process_requirement = true
+
+[[default_reviewers]]
+slot = "reviewer_1"
+model_id = "openai-codex/gpt-5.6-sol:high"
+display_name = "GPT-5.6 SOL — high"
+provider = "openai-codex"
+model = "gpt-5.6-sol"
+reasoning_level = "high"
+agent_kind = "pi"
+
+[[default_reviewers]]
+slot = "reviewer_2"
+model_id = "anthropic/claude-fable-5.1:high"
+display_name = "Claude Fable 5.1 — high"
+provider = "anthropic"
+model = "claude-fable-5.1"
+reasoning_level = "high"
+agent_kind = "claude"
+
+[adjudication]
+# Non-model producer IDs allowed only for adjudicated records.
+permitted_producer_ids = ["human"]

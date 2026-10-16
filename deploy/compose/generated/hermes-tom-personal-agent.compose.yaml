@@ -1,0 +1,31 @@
+# Rendered from profiles/*/profile.toml.
+# This template declares one active Hermes gateway container per owner instance.
+# Runtime homes, token files, logs, backups, and mounts are outside git under EXO_RUNTIME_ROOT.
+services:
+  tom-personal-agent:
+    image: "nousresearch/hermes-agent:latest"
+    container_name: "exo-hermes-tom-personal-agent"
+    restart: "unless-stopped"
+    command: "gateway run"
+    env_file:
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/secret-bridge/provider.env"
+    environment:
+      HERMES_PROFILE_ID: "tom-personal-agent"
+      HERMES_HOME: "/opt/data/hermes-home"
+      HERMES_WORKSPACE: "/workspace"
+      TERMINAL_CWD: "/workspace"
+      TELEGRAM_BOT_TOKEN_FILE: "/run/secrets/telegram-bot-token"
+      TELEGRAM_OWNER_ID_SECRET: "TELEGRAM_OWNER_ID"
+      PHASE_APP: "Tom's personal agent"
+      PHASE_ENVIRONMENT: "prod"
+      PHASE_PATH: "/tom/personal-agent"
+    volumes:
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/hermes-home:/opt/data/hermes-home:rw"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/workspace:/workspace"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/secret-bridge/telegram-bot-token:/run/secrets/telegram-bot-token:ro"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/skills:/opt/data/skills"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/vault:/opt/data/vault:rw"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/personal-files:/mnt/personal-files:ro"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/log-boundary:/var/log/hermes"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/backup-boundary:/opt/backups"
+      - "${EXO_RUNTIME_ROOT}/tom-personal-agent/placeholders/personal-documents:/mnt/personal-documents:ro"

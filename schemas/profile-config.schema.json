@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/0xTomDaniel/exo-executive-agent/schemas/profile-config.schema.json",
+  "title": "Exo Hermes Profile Config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profile",
+    "hermes",
+    "telegram",
+    "model",
+    "phase",
+    "storage",
+    "container",
+    "logs",
+    "backups",
+    "tools",
+    "proactive",
+    "smoke"
+  ],
+  "properties": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner_name", "mode", "timezone", "role", "intended_profile"]
+    },
+    "hermes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runtime", "home", "workspace", "skills_dir"]
+    },
+    "telegram": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "owner_id_secret",
+        "bot_token_secret",
+        "token_path",
+        "owner_only",
+        "text_only"
+      ]
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "provider", "api_key_secret"]
+    },
+    "phase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["app", "environment", "path"]
+    },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["runtime", "vault", "personal_files", "placeholder_mounts"]
+    },
+    "container": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "image", "restart_policy"]
+    },
+    "logs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_owned"]
+    },
+    "backups": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "git_owned", "scope"]
+    },
+    "tools": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["safe_core", "external_actions"]
+    },
+    "proactive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "target_profile_id",
+        "delivery_surface",
+        "check_ins",
+        "health_pings"
+      ]
+    },
+    "smoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "telegram_fixture",
+        "phase_fixture",
+        "storage_fixture_root",
+        "storage_sync_fixture",
+        "expected_reply"
+      ]
+    }
+  }
+}

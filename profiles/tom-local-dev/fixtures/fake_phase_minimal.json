@@ -1,0 +1,10 @@
+{
+  "app": "exo-executive-agent",
+  "environment": "dev",
+  "path": "/tom/local",
+  "secrets": {
+    "TELEGRAM_BOT_TOKEN": "fake-token-not-live",
+    "TELEGRAM_OWNER_ID": "fake-tom-owner",
+    "OPENAI_API_KEY": "fake-model-key-not-live"
+  }
+}

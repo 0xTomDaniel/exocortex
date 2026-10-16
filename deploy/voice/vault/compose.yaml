@@ -1,0 +1,34 @@
+services:
+  codex-remote-voice:
+    build:
+      context: .
+      args:
+        CODEX_UID: "${VOICE_UID:?set vault owner UID}"
+    image: exo-codex-vault-voice:0.153.1-nitride-101629f
+    container_name: exo-codex-remote-voice
+    user: "${VOICE_UID:?set vault owner UID}:${VOICE_GID:?set vault owner GID}"
+    environment:
+      HOME: /home/codex
+      PATH: /home/codex/.local/bin:/usr/local/bin:/usr/bin:/bin
+      TZ: "${VOICE_TIMEZONE:?set owner timezone}"
+    volumes:
+      - type: bind
+        source: ${VOICE_RUNTIME_ROOT:?set private runtime root}/scratch/tmp
+        target: /tmp
+        bind:
+          create_host_path: false
+      - ${VOICE_RUNTIME_ROOT:?set private runtime root}/state:/home/codex/.codex
+      - ${VOICE_RUNTIME_ROOT:?set private runtime root}/workspace:/home/codex/Documents/Codex
+      - ${VOICE_VAULT_PATH:?set absolute vault path}:${VOICE_VAULT_PATH:?set absolute vault path}
+      - /usr/local/bin/uv:/usr/local/bin/uv:ro
+      - /usr/share/zoneinfo:/usr/share/zoneinfo:ro
+    working_dir: ${VOICE_VAULT_PATH:?set absolute vault path}
+    read_only: true
+    tmpfs:
+      - /home/codex/.cache:size=64m,mode=0700,uid=${VOICE_UID},gid=${VOICE_GID}
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 2g
+    restart: unless-stopped

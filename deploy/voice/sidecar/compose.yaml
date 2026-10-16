@@ -1,0 +1,52 @@
+services:
+  hermes-runs-proxy:
+    image: python:3.13-alpine
+    container_name: ${VOICE_INSTANCE:?Set a unique Voice instance name}-runs-proxy
+    command: ["python3", "-u", "/app/proxy.py"]
+    user: "10002:10002"
+    environment:
+      HERMES_API_KEY_FILE: /run/secrets/hermes-api-key
+    volumes:
+      - ./proxy.py:/app/proxy.py:ro
+      - ${VOICE_RUNTIME_ROOT:?Set an absolute private runtime directory}/secrets/hermes-api-key:/run/secrets/hermes-api-key:ro
+    network_mode: "container:${HERMES_CONTAINER:?Set the existing owner Hermes container}"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 128m
+    restart: unless-stopped
+
+  codex-remote-voice:
+    build:
+      context: .
+      args:
+        CODEX_VERSION: 0.153.1
+        INSTALLER_SHA256: ba92dd27e5c06f0d3bbc58bfa4b9cfb6599cd2742fbb1f92a2765e6c07dedb5a
+    image: exo-codex-remote-voice:0.153.1
+    container_name: ${VOICE_INSTANCE:?Set a unique Voice instance name}-codex
+    user: "10001:10001"
+    environment:
+      HOME: /home/codex
+      PATH: /home/codex/.local/bin:/usr/local/bin:/usr/bin:/bin
+      EXOCTL_BASE_URL: http://127.0.0.1:8765
+      EXOCTL_STATE_DIR: /home/codex/.codex/exoctl-state
+    volumes:
+      - ${VOICE_RUNTIME_ROOT:?Set an absolute private runtime directory}/state:/home/codex/.codex
+      - ${VOICE_RUNTIME_ROOT:?Set an absolute private runtime directory}/workspace:/home/codex/Documents/Codex
+      - ${VOICE_RUNTIME_ROOT:?Set an absolute private runtime directory}/workspace/bin/exoctl:/usr/local/bin/exoctl:ro
+    working_dir: /home/codex/Documents/Codex
+    network_mode: "container:${HERMES_CONTAINER:?Set the existing owner Hermes container}"
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+      - /home/codex/.cache:size=64m,mode=0700,uid=10001,gid=10001
+    cap_drop: ["ALL"]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 2g
+    restart: unless-stopped

@@ -1,0 +1,21 @@
+[target]
+name = "mock-esxi-guest"
+host = "mock-exo-vm.local"
+user = "exo-operator"
+port = 22
+deploy_root = "/opt/exo/exo-executive-agent"
+runtime_root = "/srv/exo/hermes"
+compose_project = "exo-hermes-personal-agents"
+mode = "mock"
+
+[ssh]
+connect_timeout_seconds = 10
+strict_host_key_checking = "accept-new"
+
+[phase]
+materialization = "operator-phase-cli"
+dotenv_bridge_dir = "${EXO_RUNTIME_ROOT}/{profile_id}/secret-bridge"
+live_secret_policy = "human-review-only"
+
+[health]
+fixture = "profiles/tom-local-dev/fixtures/fake_health_status_problems.json"

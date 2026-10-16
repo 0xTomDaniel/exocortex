@@ -1,0 +1,85 @@
+{
+  "schema_version": "2.0.0",
+  "case_id": "EXAMPLE-CRYPTO-SCREEN-001",
+  "decision": "Compare BTC and ETH for research priority; do not authorize a trade",
+  "purpose": "screen",
+  "tier": "core",
+  "horizon": "4 years",
+  "planned_horizon_end": "2030-09-03",
+  "candidate_universe": [
+    {
+      "asset": "BTC",
+      "asset_name": "Bitcoin",
+      "asset_class": "crypto",
+      "subtype": "monetary",
+      "exposure_type": "direct"
+    },
+    {
+      "asset": "ETH",
+      "asset_name": "Ethereum",
+      "asset_class": "crypto",
+      "subtype": "base_layer",
+      "exposure_type": "direct"
+    }
+  ],
+  "reference_size": {
+    "value": 10000,
+    "unit": "USD"
+  },
+  "proposed_position": null,
+  "evidence_cutoff": "2026-09-03T23:59:59-06:00",
+  "thresholds": {
+    "bear_recovery_floor": {
+      "name": "bear-case recovery floor",
+      "value": 20,
+      "unit": "percent of current real value"
+    },
+    "float_selling_overhang": {
+      "name": "selling-overhang ceiling",
+      "value": 10,
+      "unit": "times executable 30-day depth"
+    },
+    "crypto_market_depth": {
+      "name": "reference-size slippage ceiling",
+      "value": 1,
+      "unit": "percent"
+    },
+    "security_budget": {
+      "name": "attack-cost floor",
+      "value": 5,
+      "unit": "percent of value secured"
+    }
+  },
+  "overrides": {},
+  "weights": {
+    "dimensions_by_layer": {
+      "merit": {
+        "durability": 50,
+        "value_capture": 30,
+        "meme_cultural_capital": 20
+      },
+      "entry": {
+        "valuation": 55,
+        "market_structure": 45
+      },
+      "integrity": {
+        "security": 40,
+        "control": 40,
+        "legal_claim": 20
+      }
+    },
+    "layer_weights": {}
+  },
+  "outcome_definition": "At the planned horizon, the asset retained the assessed instrument claim and produced a positive real risk-adjusted result relative to the stated comparison universe.",
+  "constraints": [
+    "Research screen only",
+    "No allocation or trade authorization"
+  ],
+  "created_at": "2026-09-03T19:00:00+00:00",
+  "bank_version": "2.0.0",
+  "bank_hash": "b59b3b97676c2deb9e4fba398c8558b2de32c4cfdc685e0110c8397fe3449fb6",
+  "runtime_version": "2.0.0",
+  "runtime_hash": "92a21c418b55602aa9778e2e56f0dafb4f496e2127171d5b78ac5b341d9381e5",
+  "case_spec_author": "example-reviewer",
+  "extensions": []
+}

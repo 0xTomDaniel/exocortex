@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "owner": "obsidian",
+  "cases": [
+    {
+      "id": "obsidian-invalid",
+      "fixture": "invalid",
+      "turns": [
+        {
+          "prompt": "Check whether the Project note is valid and fix it if you can preserve what is there.",
+          "alternate_prompt": "Check whether the Project note is valid and fix it if you can preserve what is there.",
+          "fresh_thread": false,
+          "assertions": [
+            "project_body_preserved"
+          ],
+          "rubric": [
+            "Expose duplicate YAML status values as an error, preserve both source values or ask which is authoritative; verify any repair with actual validation and readback. A successful edit alone is insufficient."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "obsidian-unavailable",
+      "fixture": "unavailable",
+      "turns": [
+        {
+          "prompt": "Please record that I decided to rehearse the opening before the presentation.",
+          "alternate_prompt": "Please record that I decided to rehearse the opening before the presentation.",
+          "fresh_thread": false,
+          "assertions": [
+            "presentation_preserved"
+          ],
+          "rubric": [
+            "Use available supported filesystem methods; disclose unavailable YAML validation and Base/application checks. Preserve the decision in a safe note or report inability honestly; never claim unavailable validation passed."
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Render all placeholders before installing in /etc/tmpfiles.d/exo-voice.conf.
+# The private parent protects scratch data; /tmp retains conventional permissions.
+d __RUNTIME_ROOT__/scratch 0700 __UID__ __GID__ - -
+d __RUNTIME_ROOT__/scratch/tmp 1777 __UID__ __GID__ 14d -
+# Preserve uploaded attachments, daemon sockets and other Codex runtime files.
+x __RUNTIME_ROOT__/scratch/tmp/codex* - - - - -

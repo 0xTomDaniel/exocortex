@@ -1,0 +1,82 @@
+# Rendered from profiles/tom-local-dev/profile.toml.
+# This template intentionally contains no secret values.
+profile:
+  id: "tom-local-dev"
+  owner_name: "Tom Daniel"
+  mode: "local-dev"
+  timezone: "Etc/UTC"
+  role: "Local/dev validation profile for Tom Daniel using fake Telegram and fake model fixtures."
+  intended_profile: "template-and-local-smoke"
+soul: "../../../SOUL.md"
+runtime:
+  home: "${EXO_RUNTIME_ROOT}/tom-local-dev/hermes-home"
+  workspace: "${EXO_RUNTIME_ROOT}/tom-local-dev/workspace"
+  skills_dir: "/opt/data/skills"
+container:
+  name: "exo-hermes-tom-local-dev"
+  restart_policy: "unless-stopped"
+telegram:
+  mode: "fake"
+  owner_only: true
+  text_only: true
+  token_env: "TELEGRAM_BOT_TOKEN"
+  owner_id_env: "TELEGRAM_OWNER_ID"
+  token_path: "${EXO_RUNTIME_ROOT}/tom-local-dev/secret-bridge/telegram-bot-token"
+model:
+  mode: "fake"
+  provider: "fake-local"
+  api_key_env: "OPENAI_API_KEY"
+phase:
+  app: "exo-executive-agent"
+  environment: "dev"
+  path: "/tom/local"
+storage:
+  runtime:
+    path: "${EXO_RUNTIME_ROOT}/tom-local-dev/hermes-home"
+    container_path: "/opt/data/hermes-home"
+    access: "read-write"
+    permissions: "0700 owner-only runtime state; not mounted into other owner containers"
+    backup: "included in per-profile backup boundary with sessions, context, and Hermes state"
+    recovery: "restore from the same profile backup boundary before starting this container"
+    allowed_write_paths:
+      - "/opt/data/hermes-home"
+  vault:
+    path: "${EXO_RUNTIME_ROOT}/tom-local-dev/vault"
+    container_path: "/opt/data/vault"
+    access: "read-write"
+    permissions: "0700 owner-only agent writable Markdown memory and vault files"
+    backup: "included in per-profile backup boundary as durable Markdown memory"
+    recovery: "restore vault alongside Hermes home; git remains distribution source, not memory source"
+    allowed_write_paths:
+      - "/opt/data/vault"
+  personal_files:
+    path: "${EXO_RUNTIME_ROOT}/tom-local-dev/personal-files"
+    container_path: "/mnt/personal-files"
+    access: "read-only"
+    permissions: "read-only by default; owner controls host permissions"
+    backup: "operator-owned source files are not backed up by the agent backup boundary"
+    recovery: "remount or resync from the operator-owned personal files provider"
+    allowed_write_paths: []
+  placeholder_mounts:
+    - name: "calendar-export"
+      kind: "provider-export"
+      path: "${EXO_RUNTIME_ROOT}/tom-local-dev/placeholders/calendar-export"
+      mount_path: "/mnt/calendar-export"
+      access: "read-only"
+      permissions: "read-only fixture mount for exported calendar data"
+      backup: "not backed up by the agent; regenerate from provider export"
+      recovery: "replace fixture/export from the provider selected outside this slice"
+      allowed_write_paths: []
+logs:
+  path: "${EXO_RUNTIME_ROOT}/tom-local-dev/log-boundary"
+backups:
+  path: "${EXO_RUNTIME_ROOT}/tom-local-dev/backup-boundary"
+  scope: "tom-local-dev-hermes-home-vault-and-config"
+tools:
+  safe_core:
+    - "memory.read"
+    - "memory.write_markdown"
+    - "files.read_workspace"
+    - "telegram.reply_text"
+  external_actions:
+    enabled: false

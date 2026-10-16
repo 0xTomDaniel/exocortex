@@ -1,0 +1,6 @@
+# Backing-agent defaults for direct-vault voice.
+# Merge these top-level keys into the private state/config.toml; preserve
+# existing prompts, project trust, login, and session state.
+# Phone/thread overrides can differ: verify the actual turn context.
+model = "gpt-6-astra"
+model_reasoning_effort = "low"

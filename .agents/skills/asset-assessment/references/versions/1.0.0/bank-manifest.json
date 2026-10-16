@@ -1,0 +1,21 @@
+{
+  "bank_version": "1.0.0",
+  "status": "draft-invalidated",
+  "comparable_with": [],
+  "files": {
+    "question-bank-common.csv": {
+      "sha256": "f8d568a6b0d5bb97b2c05500abe59416930c3855b00a8f9c0cd5750d7b248488",
+      "rows": 38
+    },
+    "question-bank-crypto.csv": {
+      "sha256": "c2e5a1ccb68df68190889bf322c1c34f167666dfc3c33faa23b75c3bc7520230",
+      "rows": 37
+    },
+    "question-bank-stocks.csv": {
+      "sha256": "66ce05467d865d9f5a46af640c8fb22176549c728282c7449ea7e3b80eb25292",
+      "rows": 36
+    }
+  },
+  "note": "Preserved exact pre-consensus question banks. Never use as an empirical baseline or pool with v2.0.0.",
+  "bank_hash": "e7d17f766d3ab468183f816d9e5563a94660a8c0c2fc0bfd2bdd7a8767d48a44"
+}

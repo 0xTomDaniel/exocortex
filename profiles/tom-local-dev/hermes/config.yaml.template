@@ -1,0 +1,71 @@
+# Rendered from profiles/tom-local-dev/profile.toml.
+# This template intentionally contains no secret values.
+profile:
+  id: "{{ profile.id }}"
+  owner_name: "{{ profile.owner_name }}"
+  mode: "{{ profile.mode }}"
+  timezone: "{{ profile.timezone }}"
+  role: "{{ profile.role }}"
+  intended_profile: "{{ profile.intended_profile }}"
+soul: "../../../SOUL.md"
+runtime:
+  home: "{{ hermes.home }}"
+  workspace: "{{ hermes.workspace }}"
+  skills_dir: "{{ hermes.skills_dir }}"
+container:
+  name: "{{ container.name }}"
+  restart_policy: "{{ container.restart_policy }}"
+telegram:
+  mode: "{{ telegram.mode }}"
+  owner_only: {{ telegram.owner_only }}
+  text_only: {{ telegram.text_only }}
+  token_env: "{{ telegram.bot_token_secret }}"
+  owner_id_env: "{{ telegram.owner_id_secret }}"
+  token_path: "{{ telegram.token_path }}"
+model:
+  mode: "{{ model.mode }}"
+  provider: "{{ model.provider }}"
+  api_key_env: "{{ model.api_key_secret }}"
+phase:
+  app: "{{ phase.app }}"
+  environment: "{{ phase.environment }}"
+  path: "{{ phase.path }}"
+storage:
+  runtime:
+    path: "{{ storage.runtime.path }}"
+    container_path: "{{ storage.runtime.container_path }}"
+    access: "{{ storage.runtime.access }}"
+    permissions: "{{ storage.runtime.permissions }}"
+    backup: "{{ storage.runtime.backup }}"
+    recovery: "{{ storage.runtime.recovery }}"
+    allowed_write_paths:
+      - "{{ storage.runtime.container_path }}"
+  vault:
+    path: "{{ storage.vault.path }}"
+    container_path: "{{ storage.vault.container_path }}"
+    access: "{{ storage.vault.access }}"
+    permissions: "{{ storage.vault.permissions }}"
+    backup: "{{ storage.vault.backup }}"
+    recovery: "{{ storage.vault.recovery }}"
+    allowed_write_paths:
+      - "{{ storage.vault.container_path }}"
+  personal_files:
+    path: "{{ storage.personal_files.path }}"
+    container_path: "{{ storage.personal_files.container_path }}"
+    access: "{{ storage.personal_files.access }}"
+    permissions: "{{ storage.personal_files.permissions }}"
+    backup: "{{ storage.personal_files.backup }}"
+    recovery: "{{ storage.personal_files.recovery }}"
+    allowed_write_paths: []
+  placeholder_mounts:
+{{ storage.placeholder_mounts_yaml }}
+logs:
+  path: "{{ logs.path }}"
+backups:
+  path: "{{ backups.path }}"
+  scope: "{{ backups.scope }}"
+tools:
+  safe_core:
+{{ tools.safe_core_yaml }}
+  external_actions:
+    enabled: {{ tools.external_actions.enabled }}

@@ -1,0 +1,5 @@
+# Defensive exclusions if an operator stages private material here by mistake.
+state/
+workspace/
+secrets/
+config.toml

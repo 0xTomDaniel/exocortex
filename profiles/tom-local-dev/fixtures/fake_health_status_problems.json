@@ -1,0 +1,24 @@
+{
+  "problems": [
+    {
+      "category": "service",
+      "severity": "warning",
+      "summary": "Hermes gateway restart count changed in the local fixture."
+    },
+    {
+      "category": "sync",
+      "severity": "warning",
+      "summary": "Calendar export placeholder is older than the configured sync window."
+    },
+    {
+      "category": "storage_safety",
+      "severity": "critical",
+      "summary": "Vault fixture reports a missing backup marker."
+    },
+    {
+      "category": "deployment",
+      "severity": "warning",
+      "summary": "Compose template digest differs from the last rendered local example."
+    }
+  ]
+}
